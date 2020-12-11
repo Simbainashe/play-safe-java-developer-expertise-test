@@ -54,7 +54,7 @@ public class Bet {
 
     public void awardWinnings(WinningsCalculator winningsCalculator, RouletteWheel rouletteWheel) {
         this.winnings = winningsCalculator.calculateWinnings(rouletteWheel, this);
-        this.player.setTotalWinnings(this.player.getTotalBets() + this.winnings);
+        this.player.setTotalWinnings(this.player.getTotalWinnings() + this.winnings);
     }
 
     @Override
