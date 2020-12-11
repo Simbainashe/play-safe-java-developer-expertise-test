@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -31,11 +32,23 @@ class ConsoleRoulette implements CommandLineRunner {
         LOGGER.info("Running console roulette");
         List<String> playerRows = Files.readAllLines(new ClassPathResource("/" + "playerNames.txt").getFile().toPath());
         playerRows.forEach(LOGGER::info);
+
         List<Player> players = playerRows.stream().map(this::convertToPlayer)
                 .collect(Collectors.toList());
+        bet(players);
+
+    }
+
+    private void bet(List<Player> players) {
         List<Bet> bets = players.stream().map(this::placeBet).collect(Collectors.toList());
         RouletteWheel rouletteWheel = bettingService.bet(bets);
         printResults(bets, rouletteWheel);
+        try {
+            TimeUnit.SECONDS.sleep(30);
+            bet(players);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private Player convertToPlayer(String playerRow) {
