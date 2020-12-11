@@ -92,7 +92,7 @@ class ConsoleRoulette implements CommandLineRunner {
                     LOGGER.info(">>>>>>>>>>>>>>>>>Invalid number try again:");
                     return readBetOption();
                 }
-                return new BettingOptionInput(BettingOption.EVEN, number);
+                return new BettingOptionInput(BettingOption.SINGLE_NUMBER, number);
 
         }
     }
@@ -121,7 +121,13 @@ class ConsoleRoulette implements CommandLineRunner {
         LOGGER.info("Number    {}", rouletteWheel.getBallNumber());
         LOGGER.info("Player    Bet    Outcome    Winnings");
         LOGGER.info("-----");
-        bets.forEach(bet -> LOGGER.info("{}    {}   {}   {}", bet.getPlayer().getName(), bet.getAmount(),
-                bet.getWinnings() > 0 ? "WIN" : "LOSE", bet.getWinnings()));
+        bets.forEach(bet -> {
+            String b = bet.getBettingOption().equals(BettingOption.SINGLE_NUMBER) ?
+                    String.valueOf(bet.getAdditionInformation().get("singleNumber")) :
+                    bet.getBettingOption().name();
+            LOGGER.info("{}    {}   {}   {}", bet.getPlayer().getName(), b
+                    , bet.getWinnings() > 0 ? "WIN" : "LOSE", bet.getWinnings());
+        });
     }
+
 }
