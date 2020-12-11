@@ -19,7 +19,6 @@ public class Bet {
     private Bet(Player player, BettingOption bettingOption, double amount) {
         Objects.requireNonNull(player, "player cannot be null");
         Objects.requireNonNull(bettingOption, "bettingOption cannot be null");
-        Objects.requireNonNull(amount, "bettingOption cannot be null");
         if (amount <= 0) {
             throw new IllegalArgumentException("amount must be greater than or equal to zero");
         }
