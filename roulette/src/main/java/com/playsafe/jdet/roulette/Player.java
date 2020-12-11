@@ -12,13 +12,15 @@ public class Player {
     private double totalWinnings;
     private double totalBets;
 
-    private Player(String name) {
+    private Player(String name, double totalWinnings, double totalBets) {
         Objects.requireNonNull(name, "name cannot be null");
         this.name = name;
+        this.totalWinnings = totalWinnings;
+        this.totalBets = totalBets;
     }
 
-    public static Player of(String name) {
-        return new Player(name);
+    public static Player of(String name, double totalWinnings, double totalBets) {
+        return new Player(name, totalWinnings, totalBets);
     }
 
     public String getName() {
