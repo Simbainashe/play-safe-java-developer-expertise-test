@@ -18,7 +18,7 @@ class SingleNumberWinningsCalculator implements WinningsCalculator {
         Objects.requireNonNull(rouletteWheel, "rouletteWheel cannot be null");
         Objects.requireNonNull(bet, "bet cannot be null");
         Integer singleNumber = (Integer) bet.getAdditionInformation().get("singleNumber");
-        if (rouletteWheel.getBallNumber() % 2 == singleNumber) {
+        if (rouletteWheel.getBallNumber() == singleNumber) {
             return bet.getAmount() * 36;
         }
         return 0;
