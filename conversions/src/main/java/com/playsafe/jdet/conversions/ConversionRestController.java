@@ -35,4 +35,10 @@ class ConversionRestController {
         return miles * 1.60934;
     }
 
+    @GetMapping("/ktom")
+    public Double kilometersToMiles(@RequestParam double kms) {
+        LOGGER.info("Converting kilometers to celsius: {}", kms);
+        return kms * 0.621371;
+    }
+
 }
