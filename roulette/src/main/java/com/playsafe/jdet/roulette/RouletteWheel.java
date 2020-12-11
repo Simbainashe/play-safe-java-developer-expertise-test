@@ -1,20 +1,21 @@
 package com.playsafe.jdet.roulette;
 
+import java.util.Random;
+
 /**
  * @author Fact S Musingarimi
  * 11/12/2020
  * 05:53
  */
 public class RouletteWheel {
-    private int ballNumber;
+    private final int ballNumber;
 
-    private RouletteWheel(int ballNumber) {
-        this.ballNumber = ballNumber;
+
+    public RouletteWheel() {
+        Random rand = new Random();
+        this.ballNumber = 1 + rand.nextInt(36);
     }
 
-    public static RouletteWheel of(int number) {
-        return new RouletteWheel(number);
-    }
 
     public int getBallNumber() {
         return ballNumber;
