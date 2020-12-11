@@ -22,4 +22,11 @@ class ConversionRestController {
         LOGGER.info("Converting celsius to kelvin: {}", celsius);
         return celsius + 273.15;
     }
+
+    @GetMapping("/ktoc")
+    public Double kelvinToCelsius(@RequestParam double kelvin) {
+        LOGGER.info("Converting kelvin to celsius: {}", kelvin);
+        return kelvin - 273.15;
+    }
+
 }
