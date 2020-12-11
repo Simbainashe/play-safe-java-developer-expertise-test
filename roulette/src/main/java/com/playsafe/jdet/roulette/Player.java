@@ -1,5 +1,7 @@
 package com.playsafe.jdet.roulette;
 
+import java.util.Objects;
+
 /**
  * @author Fact S Musingarimi
  * 11/12/2020
@@ -11,6 +13,7 @@ public class Player {
     private double totalBets;
 
     private Player(String name) {
+        Objects.requireNonNull(name, "name cannot be null");
         this.name = name;
     }
 
