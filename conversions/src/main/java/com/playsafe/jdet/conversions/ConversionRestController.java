@@ -29,4 +29,10 @@ class ConversionRestController {
         return kelvin - 273.15;
     }
 
+    @GetMapping("/mtok")
+    public Double milesToKilometers(@RequestParam double miles) {
+        LOGGER.info("Converting miles to kilometers: {}", miles);
+        return miles * 1.60934;
+    }
+
 }
