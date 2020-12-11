@@ -26,8 +26,11 @@ class BettingServiceImpl implements BettingService {
         LOGGER.info("Executing bets: {}", bets);
         Objects.requireNonNull(bets, "bets cannot be null");
         RouletteWheel rouletteWheel = new RouletteWheel();
-        bets.forEach(bet -> winningsCalculatorFactory
-                .getWinningsDeterminationStrategy(bet.getBettingOption())
-                .calculateWinnings(rouletteWheel, bet));
+        bets.forEach(bet -> this.awardBetWinnings(rouletteWheel, bet));
+    }
+
+    private void awardBetWinnings(RouletteWheel rouletteWheel, Bet bet) {
+        WinningsCalculator winningsCalculator = winningsCalculatorFactory.getWinningsDeterminationStrategy(bet.getBettingOption());
+        bet.awardWinnings(winningsCalculator, rouletteWheel);
     }
 }
