@@ -33,7 +33,7 @@ class GameServiceImpl implements GameService {
         LOGGER.info("Play roulette: {}", players);
         RouletteWheel rouletteWheel = new RouletteWheel();
         List<Bet> bets = players.stream().map(betPlacementService::placeBet).collect(Collectors.toList());
-        bets = winningsService.award(bets, rouletteWheel);
+        bets = winningsService.awardWinnings(bets, rouletteWheel);
         return GameResult.of(rouletteWheel, bets);
     }
 }

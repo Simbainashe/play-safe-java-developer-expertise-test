@@ -24,7 +24,7 @@ class WinningsServiceImpl implements WinningsService {
     }
 
     @Override
-    public List<Bet> award(List<Bet> bets, RouletteWheel rouletteWheel) {
+    public List<Bet> awardWinnings(List<Bet> bets, RouletteWheel rouletteWheel) {
         LOGGER.info("Awarding winnings fo bets: {}, {}", bets, rouletteWheel);
         Objects.requireNonNull(bets, "bets cannot be null");
         Objects.requireNonNull(rouletteWheel, "rouletteWheel cannot be null");

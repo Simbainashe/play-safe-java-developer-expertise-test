@@ -11,5 +11,5 @@ import java.util.List;
  * 06:37
  */
 public interface WinningsService {
-    List<Bet> award(List<Bet> bets, RouletteWheel rouletteWheel);
+    List<Bet> awardWinnings(List<Bet> bets, RouletteWheel rouletteWheel);
 }
