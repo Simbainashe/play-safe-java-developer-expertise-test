@@ -22,12 +22,12 @@ class BettingServiceImpl implements BettingService {
     }
 
     @Override
-    public BettingResult bet(Collection<Bet> bets) {
+    public BettingRound bet(Collection<Bet> bets) {
         LOGGER.info("Executing bets: {}", bets);
         Objects.requireNonNull(bets, "bets cannot be null");
         RouletteWheel rouletteWheel = new RouletteWheel();
         bets.forEach(bet -> this.awardBetWinnings(rouletteWheel, bet));
-        return BettingResult.of(rouletteWheel, bets);
+        return BettingRound.of(rouletteWheel, bets);
     }
 
     private void awardBetWinnings(RouletteWheel rouletteWheel, Bet bet) {

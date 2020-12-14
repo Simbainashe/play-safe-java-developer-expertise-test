@@ -7,17 +7,17 @@ import java.util.Collection;
  * 14/12/2020
  * 14:29
  */
-public class BettingResult {
+public class BettingRound {
     private final RouletteWheel rouletteWheel;
     private final Collection<Bet> bets;
 
-    private BettingResult(RouletteWheel rouletteWheel, Collection<Bet> bets) {
+    private BettingRound(RouletteWheel rouletteWheel, Collection<Bet> bets) {
         this.rouletteWheel = rouletteWheel;
         this.bets = bets;
     }
 
-    public static BettingResult of(RouletteWheel rouletteWheel, Collection<Bet> bets) {
-        return new BettingResult(rouletteWheel, bets);
+    public static BettingRound of(RouletteWheel rouletteWheel, Collection<Bet> bets) {
+        return new BettingRound(rouletteWheel, bets);
     }
 
     public RouletteWheel getRouletteWheel() {
@@ -30,7 +30,7 @@ public class BettingResult {
 
     @Override
     public String toString() {
-        return "BettingResult{" +
+        return "BettingRound{" +
                 "rouletteWheel=" + rouletteWheel +
                 ", bets=" + bets +
                 '}';

@@ -42,8 +42,8 @@ class ConsoleRoulette implements CommandLineRunner {
 
     private void bet(List<Player> players) {
         List<Bet> bets = players.stream().map(this::placeBet).collect(Collectors.toList());
-        BettingResult bettingResult = bettingService.bet(bets);
-        printResults(bettingResult.getBets(), bettingResult.getRouletteWheel());
+        BettingRound bettingRound = bettingService.bet(bets);
+        printResults(bettingRound.getBets(), bettingRound.getRouletteWheel());
         try {
             TimeUnit.SECONDS.sleep(30);
             bet(players);

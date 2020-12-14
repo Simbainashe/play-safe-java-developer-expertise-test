@@ -8,5 +8,5 @@ import java.util.Collection;
  * 06:37
  */
 public interface BettingService {
-    BettingResult bet(Collection<Bet> bets);
+    BettingRound bet(Collection<Bet> bets);
 }
