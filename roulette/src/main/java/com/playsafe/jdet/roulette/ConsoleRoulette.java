@@ -3,11 +3,8 @@ package com.playsafe.jdet.roulette;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Files;
-import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -23,27 +20,24 @@ class ConsoleRoulette implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleRoulette.class);
     private static final Scanner SCANNER = new Scanner(System.in);
     private final BettingService bettingService;
+    private final PlayerRepository playerRepository;
 
-    ConsoleRoulette(BettingService bettingService) {
+    ConsoleRoulette(BettingService bettingService, PlayerRepository playerRepository) {
         this.bettingService = bettingService;
+        this.playerRepository = playerRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
         LOGGER.info("Running console roulette");
-        List<String> playerRows = Files.readAllLines(new ClassPathResource("/" + "playerNames.txt").getFile().toPath());
-        playerRows.forEach(LOGGER::info);
-
-        List<Player> players = playerRows.stream().map(this::convertToPlayer)
-                .collect(Collectors.toList());
+        List<Player> players = playerRepository.getPlayers();
         bet(players);
-
     }
 
     private void bet(List<Player> players) {
         List<Bet> bets = players.stream().map(this::placeBet).collect(Collectors.toList());
         BettingRound bettingRound = bettingService.bet(bets);
-        printResults(bettingRound.getBets(), bettingRound.getRouletteWheel());
+        printResults(bettingRound);
         try {
             TimeUnit.SECONDS.sleep(30);
             bet(players);
@@ -52,22 +46,7 @@ class ConsoleRoulette implements CommandLineRunner {
         }
     }
 
-    private Player convertToPlayer(String playerRow) {
-        String[] playerDetails = playerRow.split(",");
-        String name = null;
-        double totalWins = 0;
-        double totalBets = 0;
-        for (int i = 0; i < playerDetails.length; i++) {
-            if (i == 0) {
-                name = playerDetails[i];
-            } else if (i == 1) {
-                totalWins = Double.parseDouble(playerDetails[i]);
-            } else if (i == 2) {
-                totalBets = Double.parseDouble(playerDetails[i]);
-            }
-        }
-        return Player.of(name, totalWins, totalBets);
-    }
+
 
     private Bet placeBet(Player player) {
         System.out.print(">>>>>>>>Place your player bet: " + player.getName());
@@ -118,11 +97,11 @@ class ConsoleRoulette implements CommandLineRunner {
         }
     }
 
-    private void printResults(Collection<Bet> bets, RouletteWheel rouletteWheel) {
-        LOGGER.info("Number    {}", rouletteWheel.getBallNumber());
+    private void printResults(BettingRound bettingRound) {
+        LOGGER.info("Number    {}", bettingRound.getRouletteWheel().getBallNumber());
         LOGGER.info("Player    Bet    Outcome    Winnings");
         LOGGER.info("-----");
-        bets.forEach(bet -> {
+        bettingRound.getBets().forEach(bet -> {
             String b = bet.getBettingOption().equals(BettingOption.SINGLE_NUMBER) ?
                     String.valueOf(bet.getAdditionInformation().get("singleNumber")) :
                     bet.getBettingOption().name();
