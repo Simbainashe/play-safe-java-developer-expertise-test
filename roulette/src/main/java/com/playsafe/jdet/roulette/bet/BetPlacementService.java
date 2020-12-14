@@ -1,4 +1,6 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.bet;
+
+import com.playsafe.jdet.roulette.player.Player;
 
 /**
  * @author Fact S Musingarimi

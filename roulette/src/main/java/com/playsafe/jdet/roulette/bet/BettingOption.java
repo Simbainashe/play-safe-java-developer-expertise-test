@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.bet;
 
 /**
  * @author Fact S Musingarimi

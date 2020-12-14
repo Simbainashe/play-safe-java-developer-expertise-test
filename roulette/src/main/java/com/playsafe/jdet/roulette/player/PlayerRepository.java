@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.player;
 
 import java.util.List;
 

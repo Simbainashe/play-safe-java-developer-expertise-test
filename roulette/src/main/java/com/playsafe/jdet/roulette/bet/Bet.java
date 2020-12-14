@@ -1,4 +1,8 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.bet;
+
+import com.playsafe.jdet.roulette.player.Player;
+import com.playsafe.jdet.roulette.wheel.RouletteWheel;
+import com.playsafe.jdet.roulette.winnings.WinningsCalculator;
 
 import java.util.HashMap;
 import java.util.Map;

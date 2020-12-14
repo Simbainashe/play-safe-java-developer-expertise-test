@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.player;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

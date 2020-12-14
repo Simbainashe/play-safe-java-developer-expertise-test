@@ -1,5 +1,6 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.bet;
 
+import com.playsafe.jdet.roulette.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

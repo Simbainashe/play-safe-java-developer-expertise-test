@@ -1,4 +1,6 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.winnings;
+
+import com.playsafe.jdet.roulette.bet.BettingOption;
 
 /**
  * @author Fact S Musingarimi

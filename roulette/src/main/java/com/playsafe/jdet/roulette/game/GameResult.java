@@ -1,4 +1,7 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.game;
+
+import com.playsafe.jdet.roulette.bet.Bet;
+import com.playsafe.jdet.roulette.wheel.RouletteWheel;
 
 import java.util.Collection;
 
