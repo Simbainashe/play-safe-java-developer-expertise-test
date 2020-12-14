@@ -1,7 +1,7 @@
 package com.playsafe.jdet.roulette.game;
 
 import com.playsafe.jdet.roulette.bet.Bet;
-import com.playsafe.jdet.roulette.bet.BetPlacementService;
+import com.playsafe.jdet.roulette.bet.BetService;
 import com.playsafe.jdet.roulette.player.Player;
 import com.playsafe.jdet.roulette.wheel.RouletteWheel;
 import com.playsafe.jdet.roulette.winnings.WinningsService;
@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 class GameServiceImpl implements GameService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameServiceImpl.class);
     private final WinningsService winningsService;
-    private final BetPlacementService betPlacementService;
+    private final BetService betService;
 
-    GameServiceImpl(WinningsService winningsService, BetPlacementService betPlacementService) {
+    GameServiceImpl(WinningsService winningsService, BetService betService) {
         this.winningsService = winningsService;
-        this.betPlacementService = betPlacementService;
+        this.betService = betService;
     }
 
     @Override
     public GameResult play(List<Player> players) {
         LOGGER.info("Play roulette: {}", players);
         RouletteWheel rouletteWheel = new RouletteWheel();
-        List<Bet> bets = players.stream().map(betPlacementService::placeBet).collect(Collectors.toList());
+        List<Bet> bets = players.stream().map(betService::placeBet).collect(Collectors.toList());
         bets = winningsService.awardWinnings(bets, rouletteWheel);
         return GameResult.of(rouletteWheel, bets);
     }

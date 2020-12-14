@@ -13,8 +13,8 @@ import java.util.Scanner;
  * 16:01
  */
 @Service
-class BetPlacementServiceImpl implements BetPlacementService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BetPlacementServiceImpl.class);
+class BetServiceImpl implements BetService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BetServiceImpl.class);
     private static final Scanner SCANNER = new Scanner(System.in);
 
     @Override

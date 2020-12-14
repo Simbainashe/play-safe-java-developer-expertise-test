@@ -7,6 +7,6 @@ import com.playsafe.jdet.roulette.player.Player;
  * 14/12/2020
  * 16:01
  */
-public interface BetPlacementService {
+public interface BetService {
     Bet placeBet(Player player);
 }
