@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,21 +13,21 @@ import java.util.Objects;
  * 06:40
  */
 @Service
-class BettingServiceImpl implements BettingService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BettingServiceImpl.class);
+class WinningsAwardServiceImpl implements WinningsAwardService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WinningsAwardServiceImpl.class);
     private final WinningsCalculatorFactory winningsCalculatorFactory;
 
-    BettingServiceImpl(WinningsCalculatorFactory winningsCalculatorFactory) {
+    WinningsAwardServiceImpl(WinningsCalculatorFactory winningsCalculatorFactory) {
         this.winningsCalculatorFactory = winningsCalculatorFactory;
     }
 
     @Override
-    public BettingRound bet(Collection<Bet> bets) {
-        LOGGER.info("Executing bets: {}", bets);
+    public List<Bet> award(List<Bet> bets, RouletteWheel rouletteWheel) {
+        LOGGER.info("Awarding winnings fo bets: {}, {}", bets, rouletteWheel);
         Objects.requireNonNull(bets, "bets cannot be null");
-        RouletteWheel rouletteWheel = new RouletteWheel();
+        Objects.requireNonNull(rouletteWheel, "rouletteWheel cannot be null");
         bets.forEach(bet -> this.awardBetWinnings(rouletteWheel, bet));
-        return BettingRound.of(rouletteWheel, bets);
+        return bets;
     }
 
     private void awardBetWinnings(RouletteWheel rouletteWheel, Bet bet) {

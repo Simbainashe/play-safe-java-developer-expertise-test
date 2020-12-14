@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Component
 class ConsoleRoulette implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleRoulette.class);
-    private final BettingService bettingService;
+    private final WinningsAwardService winningsAwardService;
     private final PlayerRepository playerRepository;
     private final BetPlacementService betPlacementService;
 
-    ConsoleRoulette(BettingService bettingService, PlayerRepository playerRepository,
+    ConsoleRoulette(WinningsAwardService winningsAwardService, PlayerRepository playerRepository,
                     BetPlacementService betPlacementService) {
-        this.bettingService = bettingService;
+        this.winningsAwardService = winningsAwardService;
         this.playerRepository = playerRepository;
         this.betPlacementService = betPlacementService;
     }
@@ -36,9 +36,10 @@ class ConsoleRoulette implements CommandLineRunner {
     }
 
     private void bet(List<Player> players) {
+        RouletteWheel rouletteWheel = new RouletteWheel();
         List<Bet> bets = players.stream().map(betPlacementService::placeBet).collect(Collectors.toList());
-        BettingRound bettingRound = bettingService.bet(bets);
-        printResults(bettingRound);
+        bets = winningsAwardService.award(bets, rouletteWheel);
+        printResults(rouletteWheel, bets);
         try {
             TimeUnit.SECONDS.sleep(30);
             bet(players);
@@ -47,12 +48,11 @@ class ConsoleRoulette implements CommandLineRunner {
         }
     }
 
-
-    private void printResults(BettingRound bettingRound) {
-        LOGGER.info("Number    {}", bettingRound.getRouletteWheel().getBallNumber());
+    private void printResults(RouletteWheel rouletteWheel, List<Bet> bets) {
+        LOGGER.info("Number    {}", rouletteWheel.getBallNumber());
         LOGGER.info("Player    Bet    Outcome    Winnings");
         LOGGER.info("-----");
-        bettingRound.getBets().forEach(bet -> {
+        bets.forEach(bet -> {
             String b = bet.getBettingOption().equals(BettingOption.SINGLE_NUMBER) ?
                     String.valueOf(bet.getAdditionInformation().get("singleNumber")) :
                     bet.getBettingOption().name();
