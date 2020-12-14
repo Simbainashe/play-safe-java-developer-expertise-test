@@ -8,5 +8,5 @@ import java.util.Collection;
  * 06:37
  */
 public interface BettingService {
-    RouletteWheel bet(Collection<Bet> bets);
+    BettingResult bet(Collection<Bet> bets);
 }

@@ -7,6 +7,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +42,8 @@ class ConsoleRoulette implements CommandLineRunner {
 
     private void bet(List<Player> players) {
         List<Bet> bets = players.stream().map(this::placeBet).collect(Collectors.toList());
-        RouletteWheel rouletteWheel = bettingService.bet(bets);
-        printResults(bets, rouletteWheel);
+        BettingResult bettingResult = bettingService.bet(bets);
+        printResults(bettingResult.getBets(), bettingResult.getRouletteWheel());
         try {
             TimeUnit.SECONDS.sleep(30);
             bet(players);
@@ -117,7 +118,7 @@ class ConsoleRoulette implements CommandLineRunner {
         }
     }
 
-    private void printResults(List<Bet> bets, RouletteWheel rouletteWheel) {
+    private void printResults(Collection<Bet> bets, RouletteWheel rouletteWheel) {
         LOGGER.info("Number    {}", rouletteWheel.getBallNumber());
         LOGGER.info("Player    Bet    Outcome    Winnings");
         LOGGER.info("-----");
