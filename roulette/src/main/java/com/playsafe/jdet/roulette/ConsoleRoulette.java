@@ -1,8 +1,8 @@
 package com.playsafe.jdet.roulette;
 
 import com.playsafe.jdet.roulette.bet.BettingOption;
-import com.playsafe.jdet.roulette.game.GameExecutionService;
 import com.playsafe.jdet.roulette.game.GameResult;
+import com.playsafe.jdet.roulette.game.GameService;
 import com.playsafe.jdet.roulette.player.Player;
 import com.playsafe.jdet.roulette.player.PlayerRepository;
 import org.slf4j.Logger;
@@ -21,18 +21,18 @@ import java.util.List;
 class ConsoleRoulette implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleRoulette.class);
     private final PlayerRepository playerRepository;
-    private final GameExecutionService gameExecutionService;
+    private final GameService gameService;
 
-    ConsoleRoulette(PlayerRepository playerRepository, GameExecutionService gameExecutionService) {
+    ConsoleRoulette(PlayerRepository playerRepository, GameService gameService) {
         this.playerRepository = playerRepository;
-        this.gameExecutionService = gameExecutionService;
+        this.gameService = gameService;
     }
 
     @Override
     public void run(String... args) {
         LOGGER.info("Running console roulette");
         List<Player> players = playerRepository.getPlayers();
-        GameResult gameResult = gameExecutionService.play(players);
+        GameResult gameResult = gameService.play(players);
         printResult(gameResult);
     }
 

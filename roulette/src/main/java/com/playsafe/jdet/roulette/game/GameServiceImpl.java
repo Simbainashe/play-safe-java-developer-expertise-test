@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
  * 17:02
  */
 @Service
-class GameExecutionServiceImpl implements GameExecutionService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameExecutionServiceImpl.class);
+class GameServiceImpl implements GameService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameServiceImpl.class);
     private final WinningsAwardService winningsAwardService;
     private final BetPlacementService betPlacementService;
 
-    GameExecutionServiceImpl(WinningsAwardService winningsAwardService, BetPlacementService betPlacementService) {
+    GameServiceImpl(WinningsAwardService winningsAwardService, BetPlacementService betPlacementService) {
         this.winningsAwardService = winningsAwardService;
         this.betPlacementService = betPlacementService;
     }

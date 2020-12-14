@@ -9,6 +9,6 @@ import java.util.List;
  * 14/12/2020
  * 16:56
  */
-public interface GameExecutionService {
+public interface GameService {
     GameResult play(List<Player> players);
 }
