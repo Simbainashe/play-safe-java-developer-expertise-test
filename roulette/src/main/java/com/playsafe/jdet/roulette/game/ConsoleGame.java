@@ -1,8 +1,6 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.game;
 
 import com.playsafe.jdet.roulette.bet.BettingOption;
-import com.playsafe.jdet.roulette.game.GameResult;
-import com.playsafe.jdet.roulette.game.GameService;
 import com.playsafe.jdet.roulette.player.Player;
 import com.playsafe.jdet.roulette.player.PlayerRepository;
 import org.slf4j.Logger;
@@ -18,12 +16,12 @@ import java.util.List;
  * 07:14
  */
 @Component
-class ConsoleRoulette implements CommandLineRunner {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleRoulette.class);
+class ConsoleGame implements CommandLineRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleGame.class);
     private final PlayerRepository playerRepository;
     private final GameService gameService;
 
-    ConsoleRoulette(PlayerRepository playerRepository, GameService gameService) {
+    ConsoleGame(PlayerRepository playerRepository, GameService gameService) {
         this.playerRepository = playerRepository;
         this.gameService = gameService;
     }
