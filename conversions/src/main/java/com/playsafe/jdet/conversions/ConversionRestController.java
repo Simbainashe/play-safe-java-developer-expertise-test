@@ -16,29 +16,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("conversions")
 class ConversionRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionRestController.class);
+    private final ConversionService conversionService;
+
+    ConversionRestController(ConversionService conversionService) {
+        this.conversionService = conversionService;
+    }
 
     @GetMapping("/ctok")
     public Double celsiusToKelvin(@RequestParam double celsius) {
-        LOGGER.info("Converting celsius to kelvin: {}", celsius);
-        return celsius + 273.15;
+        LOGGER.info("Conversion request for celsius to kelvin: {}", celsius);
+        return conversionService.celsiusToKelvin(celsius);
     }
 
     @GetMapping("/ktoc")
     public Double kelvinToCelsius(@RequestParam double kelvin) {
-        LOGGER.info("Converting kelvin to celsius: {}", kelvin);
-        return kelvin - 273.15;
+        LOGGER.info("Conversion request for kelvin to celsius: {}", kelvin);
+        return conversionService.kelvinToCelsius(kelvin);
     }
 
     @GetMapping("/mtok")
     public Double milesToKilometers(@RequestParam double miles) {
-        LOGGER.info("Converting miles to kilometers: {}", miles);
-        return miles * 1.60934;
+        LOGGER.info("Conversion request for miles to kilometers: {}", miles);
+        return conversionService.milesToKilometers(miles);
     }
 
     @GetMapping("/ktom")
     public Double kilometersToMiles(@RequestParam double kms) {
-        LOGGER.info("Converting kilometers to celsius: {}", kms);
-        return kms * 0.621371;
+        LOGGER.info("Conversion request for kilometers to celsius: {}", kms);
+        return conversionService.kilometersToMiles(kms);
     }
 
 }
