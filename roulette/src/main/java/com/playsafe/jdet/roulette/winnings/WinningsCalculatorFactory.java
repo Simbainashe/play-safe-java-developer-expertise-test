@@ -8,5 +8,5 @@ import com.playsafe.jdet.roulette.bet.BettingOption;
  * 06:44
  */
 interface WinningsCalculatorFactory {
-    WinningsCalculator getWinningsDeterminationStrategy(BettingOption bettingOption);
+    WinningsCalculator getWinningsCalculator(BettingOption bettingOption);
 }

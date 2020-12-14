@@ -33,7 +33,7 @@ class WinningsServiceImpl implements WinningsService {
     }
 
     private void awardBetWinnings(RouletteWheel rouletteWheel, Bet bet) {
-        WinningsCalculator winningsCalculator = winningsCalculatorFactory.getWinningsDeterminationStrategy(bet.getBettingOption());
+        WinningsCalculator winningsCalculator = winningsCalculatorFactory.getWinningsCalculator(bet.getBettingOption());
         bet.awardWinnings(winningsCalculator, rouletteWheel);
     }
 }

@@ -17,8 +17,8 @@ class WinningsCalculatorFactoryImpl implements WinningsCalculatorFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(WinningsCalculatorFactoryImpl.class);
 
     @Override
-    public WinningsCalculator getWinningsDeterminationStrategy(BettingOption bettingOption) {
-        LOGGER.info("Determining winnings strategy for betting option: {}", bettingOption);
+    public WinningsCalculator getWinningsCalculator(BettingOption bettingOption) {
+        LOGGER.info("Determining winnings calculator for betting option: {}", bettingOption);
         Objects.requireNonNull(bettingOption, "bettingOption cannot be null");
         switch (bettingOption) {
             case ODD:
