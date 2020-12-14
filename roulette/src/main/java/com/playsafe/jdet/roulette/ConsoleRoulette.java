@@ -16,18 +16,18 @@ import java.util.List;
 class ConsoleRoulette implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleRoulette.class);
     private final PlayerRepository playerRepository;
-    private final GamingService gamingService;
+    private final GameExecutionService gameExecutionService;
 
-    ConsoleRoulette(PlayerRepository playerRepository, GamingService gamingService) {
+    ConsoleRoulette(PlayerRepository playerRepository, GameExecutionService gameExecutionService) {
         this.playerRepository = playerRepository;
-        this.gamingService = gamingService;
+        this.gameExecutionService = gameExecutionService;
     }
 
     @Override
     public void run(String... args) {
         LOGGER.info("Running console roulette");
         List<Player> players = playerRepository.getPlayers();
-        GameResult gameResult = gamingService.play(players);
+        GameResult gameResult = gameExecutionService.play(players);
         printResult(gameResult);
     }
 
