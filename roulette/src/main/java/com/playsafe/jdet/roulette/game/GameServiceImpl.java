@@ -4,7 +4,7 @@ import com.playsafe.jdet.roulette.bet.Bet;
 import com.playsafe.jdet.roulette.bet.BetPlacementService;
 import com.playsafe.jdet.roulette.player.Player;
 import com.playsafe.jdet.roulette.wheel.RouletteWheel;
-import com.playsafe.jdet.roulette.winnings.WinningsAwardService;
+import com.playsafe.jdet.roulette.winnings.WinningsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 @Service
 class GameServiceImpl implements GameService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameServiceImpl.class);
-    private final WinningsAwardService winningsAwardService;
+    private final WinningsService winningsService;
     private final BetPlacementService betPlacementService;
 
-    GameServiceImpl(WinningsAwardService winningsAwardService, BetPlacementService betPlacementService) {
-        this.winningsAwardService = winningsAwardService;
+    GameServiceImpl(WinningsService winningsService, BetPlacementService betPlacementService) {
+        this.winningsService = winningsService;
         this.betPlacementService = betPlacementService;
     }
 
@@ -33,7 +33,7 @@ class GameServiceImpl implements GameService {
         LOGGER.info("Play roulette: {}", players);
         RouletteWheel rouletteWheel = new RouletteWheel();
         List<Bet> bets = players.stream().map(betPlacementService::placeBet).collect(Collectors.toList());
-        bets = winningsAwardService.award(bets, rouletteWheel);
+        bets = winningsService.award(bets, rouletteWheel);
         return GameResult.of(rouletteWheel, bets);
     }
 }

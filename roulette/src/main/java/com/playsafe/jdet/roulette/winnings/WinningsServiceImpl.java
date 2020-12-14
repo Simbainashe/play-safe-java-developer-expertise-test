@@ -15,11 +15,11 @@ import java.util.Objects;
  * 06:40
  */
 @Service
-class WinningsAwardServiceImpl implements WinningsAwardService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WinningsAwardServiceImpl.class);
+class WinningsServiceImpl implements WinningsService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WinningsServiceImpl.class);
     private final WinningsCalculatorFactory winningsCalculatorFactory;
 
-    WinningsAwardServiceImpl(WinningsCalculatorFactory winningsCalculatorFactory) {
+    WinningsServiceImpl(WinningsCalculatorFactory winningsCalculatorFactory) {
         this.winningsCalculatorFactory = winningsCalculatorFactory;
     }
 

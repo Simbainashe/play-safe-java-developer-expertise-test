@@ -10,6 +10,6 @@ import java.util.List;
  * 11/12/2020
  * 06:37
  */
-public interface WinningsAwardService {
+public interface WinningsService {
     List<Bet> award(List<Bet> bets, RouletteWheel rouletteWheel);
 }
