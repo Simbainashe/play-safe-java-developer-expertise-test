@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette;
+package com.playsafe.jdet.roulette.wheel;
 
 import java.util.Random;
 
