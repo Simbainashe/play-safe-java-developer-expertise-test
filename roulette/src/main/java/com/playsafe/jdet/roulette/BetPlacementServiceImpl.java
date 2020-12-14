@@ -18,7 +18,7 @@ class BetPlacementServiceImpl implements BetPlacementService {
 
     @Override
     public Bet placeBet(Player player) {
-        LOGGER.info(">>>>>>>>Place player bet: {}\n", player.getName());
+        LOGGER.info(">>>>>>>>Place player bet:\n {}", player.getName());
         BettingOptionInput bettingOptionInput = readBetOption();
         double amount = SCANNER.nextDouble();
         Bet bet = Bet.of(player, bettingOptionInput.bettingOption, amount);
