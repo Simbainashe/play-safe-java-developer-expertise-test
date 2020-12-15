@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -31,9 +32,29 @@ class BettingRoundServiceImpl implements BettingRoundService {
     @Override
     public BettingRound play(List<Player> players) {
         LOGGER.info("Play roulette: {}", players);
-        RouletteWheel rouletteWheel = new RouletteWheel();
-        List<Bet> bets = players.stream().map(betService::placeBet).collect(Collectors.toList());
+        final RouletteWheel rouletteWheel = new RouletteWheel();
+        this.spinWheelAtRegularIntervals(rouletteWheel);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Callable<List<Bet>> bettingTask = () -> players.stream().map(betService::placeBet).collect(Collectors.toList());
+        Future<List<Bet>> bettingTaskResult = executor.submit(bettingTask);
+        List<Bet> bets = this.getBets(bettingTaskResult);
         bets = winningsService.awardWinnings(bets, rouletteWheel);
         return BettingRound.of(rouletteWheel, bets);
+    }
+
+    private void spinWheelAtRegularIntervals(RouletteWheel rouletteWheel) {
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        Runnable spinningWheelTask = rouletteWheel::spin;
+        scheduledExecutorService.scheduleWithFixedDelay(spinningWheelTask, 0, 30, TimeUnit.SECONDS);
+    }
+
+    private List<Bet> getBets(Future<List<Bet>> future) {
+        try {
+            return future.get();
+        } catch (InterruptedException e) {
+            throw new IllegalStateException("Placing of bets has been interrupted", e);
+        } catch (ExecutionException e) {
+            throw new IllegalStateException("Placing of bets has failed to execute", e);
+        }
     }
 }
