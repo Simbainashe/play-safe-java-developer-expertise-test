@@ -19,7 +19,8 @@ class BetServiceImpl implements BetService {
 
     @Override
     public Bet placeBet(Player player) {
-        LOGGER.info(">>>>>>>>Place player bet:\n {}", player.getName());
+        LOGGER.info("Placing a bet for: {}\n", player.getName());
+        System.out.printf("%s\t", player.getName());
         BettingOptionInput bettingOptionInput = readBetOption();
         double amount = SCANNER.nextDouble();
         Bet bet = Bet.of(player, bettingOptionInput.bettingOption, amount);
