@@ -8,17 +8,18 @@ import java.util.Random;
  * 05:53
  */
 public class RouletteWheel {
-    private final int ballNumber;
-
+    private final Random random = new Random();
+    private int ballNumber;
 
     public RouletteWheel() {
-        Random rand = new Random();
-        this.ballNumber = 1 + rand.nextInt(36);
     }
-
 
     public int getBallNumber() {
         return ballNumber;
+    }
+
+    public void spin() {
+        this.ballNumber = 1 + random.nextInt(36);
     }
 
     @Override
