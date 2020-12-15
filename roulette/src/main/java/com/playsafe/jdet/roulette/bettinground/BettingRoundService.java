@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette.game;
+package com.playsafe.jdet.roulette.bettinground;
 
 import com.playsafe.jdet.roulette.player.Player;
 
@@ -9,6 +9,6 @@ import java.util.List;
  * 14/12/2020
  * 16:56
  */
-public interface GameService {
-    GameResult play(List<Player> players);
+public interface BettingRoundService {
+    BettingRound play(List<Player> players);
 }

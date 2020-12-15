@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette.game;
+package com.playsafe.jdet.roulette.bettinground;
 
 import com.playsafe.jdet.roulette.bet.Bet;
 import com.playsafe.jdet.roulette.bet.BetService;
@@ -18,22 +18,22 @@ import java.util.stream.Collectors;
  * 17:02
  */
 @Service
-class GameServiceImpl implements GameService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameServiceImpl.class);
+class BettingRoundServiceImpl implements BettingRoundService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BettingRoundServiceImpl.class);
     private final WinningsService winningsService;
     private final BetService betService;
 
-    GameServiceImpl(WinningsService winningsService, BetService betService) {
+    BettingRoundServiceImpl(WinningsService winningsService, BetService betService) {
         this.winningsService = winningsService;
         this.betService = betService;
     }
 
     @Override
-    public GameResult play(List<Player> players) {
+    public BettingRound play(List<Player> players) {
         LOGGER.info("Play roulette: {}", players);
         RouletteWheel rouletteWheel = new RouletteWheel();
         List<Bet> bets = players.stream().map(betService::placeBet).collect(Collectors.toList());
         bets = winningsService.awardWinnings(bets, rouletteWheel);
-        return GameResult.of(rouletteWheel, bets);
+        return BettingRound.of(rouletteWheel, bets);
     }
 }

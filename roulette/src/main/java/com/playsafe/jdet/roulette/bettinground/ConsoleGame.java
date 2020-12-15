@@ -1,4 +1,4 @@
-package com.playsafe.jdet.roulette.game;
+package com.playsafe.jdet.roulette.bettinground;
 
 import com.playsafe.jdet.roulette.bet.BettingOption;
 import com.playsafe.jdet.roulette.player.Player;
@@ -19,26 +19,26 @@ import java.util.List;
 class ConsoleGame implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleGame.class);
     private final PlayerRepository playerRepository;
-    private final GameService gameService;
+    private final BettingRoundService bettingRoundService;
 
-    ConsoleGame(PlayerRepository playerRepository, GameService gameService) {
+    ConsoleGame(PlayerRepository playerRepository, BettingRoundService bettingRoundService) {
         this.playerRepository = playerRepository;
-        this.gameService = gameService;
+        this.bettingRoundService = bettingRoundService;
     }
 
     @Override
     public void run(String... args) {
         LOGGER.info("Running console roulette");
         List<Player> players = playerRepository.getPlayers();
-        GameResult gameResult = gameService.play(players);
-        printResult(gameResult);
+        BettingRound bettingRound = bettingRoundService.play(players);
+        printResult(bettingRound);
     }
 
-    private void printResult(GameResult gameResult) {
-        LOGGER.info("Number    {}", gameResult.getRouletteWheel().getBallNumber());
+    private void printResult(BettingRound bettingRound) {
+        LOGGER.info("Number    {}", bettingRound.getRouletteWheel().getBallNumber());
         LOGGER.info("Player    Bet    Outcome    Winnings");
         LOGGER.info("-----");
-        gameResult.getBets().forEach(bet -> {
+        bettingRound.getBets().forEach(bet -> {
             String b = bet.getBettingOption().equals(BettingOption.SINGLE_NUMBER) ?
                     String.valueOf(bet.getAdditionInformation().get("singleNumber")) :
                     bet.getBettingOption().name();
