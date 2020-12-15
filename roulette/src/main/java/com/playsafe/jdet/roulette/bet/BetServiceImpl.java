@@ -55,7 +55,7 @@ class BetServiceImpl implements BetService {
         }
     }
 
-    static class BettingOptionInput {
+    private static class BettingOptionInput {
         private final BettingOption bettingOption;
         private final int singleNumber;
 
