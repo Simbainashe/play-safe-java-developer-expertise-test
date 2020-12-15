@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface PlayerRepository {
     List<Player> getPlayers();
+
+    List<Player> saveAll(List<Player> players);
 }

@@ -1,6 +1,8 @@
-package com.playsafe.jdet.roulette.bettinground;
+package com.playsafe.jdet.roulette;
 
 import com.playsafe.jdet.roulette.bet.BettingOption;
+import com.playsafe.jdet.roulette.bettinground.BettingRound;
+import com.playsafe.jdet.roulette.bettinground.BettingRoundService;
 import com.playsafe.jdet.roulette.player.Player;
 import com.playsafe.jdet.roulette.player.PlayerRepository;
 import org.slf4j.Logger;
@@ -32,19 +34,34 @@ class ConsoleGame implements CommandLineRunner {
         List<Player> players = playerRepository.getPlayers();
         BettingRound bettingRound = bettingRoundService.play(players);
         printResult(bettingRound);
+        players = playerRepository.saveAll(players);
+        printTotals(players);
     }
 
     private void printResult(BettingRound bettingRound) {
-        LOGGER.info("Number    {}", bettingRound.getRouletteWheel().getBallNumber());
-        LOGGER.info("Player    Bet    Outcome    Winnings");
-        LOGGER.info("-----");
+        System.out.println("-----");
+        System.out.printf("%-20s\t\t\t%d%n", "Number", bettingRound.getRouletteWheel().getBallNumber());
+        System.out.printf("%-20s\t\t\t%-6s\t\t\t%-6s\t\t\t%-6s%n", "Player", "Bet", "Outcome", "Winnings");
+        System.out.println("-----");
         bettingRound.getBets().forEach(bet -> {
             String b = bet.getBettingOption().equals(BettingOption.SINGLE_NUMBER) ?
                     String.valueOf(bet.getAdditionInformation().get("singleNumber")) :
                     bet.getBettingOption().name();
-            LOGGER.info("{}    {}   {}   {}", bet.getPlayer().getName(), b
+            System.out.printf("%-20s\t\t\t%-6s\t\t\t%-6s\t\t\t%-6s%n", bet.getPlayer().getName(), b
                     , bet.getWinnings() > 0 ? "WIN" : "LOSE", bet.getWinnings());
         });
+        System.out.println("");
+
+    }
+
+
+    private void printTotals(List<Player> players) {
+        System.out.println("-----");
+        System.out.printf("%-20s\t\t\t%-10s\t\t\t%-10s%n", "Player", "Total Win", "Total Bet");
+        System.out.println("------");
+        players.forEach(player -> System.out.printf("%-20s\t\t\t%-10s\t\t\t%-10s%n", player.getName(),
+                player.getTotalWinnings(), player.getTotalBets()));
+
     }
 
 }
