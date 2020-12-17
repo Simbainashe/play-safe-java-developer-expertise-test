@@ -33,19 +33,28 @@ class BettingRoundServiceImpl implements BettingRoundService {
     public BettingRound play(List<Player> players) {
         LOGGER.info("Play roulette: {}", players);
         final RouletteWheel rouletteWheel = new RouletteWheel();
-        this.spinWheelAtRegularIntervals(rouletteWheel);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Callable<List<Bet>> bettingTask = () -> players.stream().map(betService::placeBet).collect(Collectors.toList());
-        Future<List<Bet>> bettingTaskResult = executor.submit(bettingTask);
-        List<Bet> bets = this.getBets(bettingTaskResult);
-        bets = winningsService.awardWinnings(bets, rouletteWheel);
-        return BettingRound.of(rouletteWheel, bets);
+        ScheduledExecutorService scheduledExecutorService = null;
+        ExecutorService executor = null;
+        try {
+            scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            this.spinWheelAtRegularIntervals(scheduledExecutorService, rouletteWheel);
+            executor = Executors.newSingleThreadExecutor();
+            Callable<List<Bet>> bettingTask = () -> players.stream().map(betService::placeBet).collect(Collectors.toList());
+            Future<List<Bet>> bettingTaskResult = executor.submit(bettingTask);
+            List<Bet> bets = this.getBets(bettingTaskResult);
+            bets = winningsService.awardWinnings(bets, rouletteWheel);
+            return BettingRound.of(rouletteWheel, bets);
+        } finally {
+            if (scheduledExecutorService != null) scheduledExecutorService.shutdown();
+            if (executor != null) executor.shutdown();
+        }
+
     }
 
-    private void spinWheelAtRegularIntervals(RouletteWheel rouletteWheel) {
-        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private void spinWheelAtRegularIntervals(ScheduledExecutorService scheduledExecutorService, RouletteWheel rouletteWheel) {
         Runnable spinningWheelTask = rouletteWheel::spin;
         scheduledExecutorService.scheduleWithFixedDelay(spinningWheelTask, 0, 30, TimeUnit.SECONDS);
+        scheduledExecutorService.shutdown();
     }
 
     private List<Bet> getBets(Future<List<Bet>> future) {
